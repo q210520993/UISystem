@@ -1,0 +1,8 @@
+debug: false
+
+resources:
+  enable: true
+  #加载的材质包名称，不需要带zip
+  name: "UnrealResource"
+  #材质包密码
+  password: "123456"
