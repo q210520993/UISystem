@@ -5,6 +5,7 @@ import com.daxton.unrealcore.resource.been.ResourceStatus
 import com.daxton.unrealcore.resource.event.PlayerResourcePackEvent
 import com.skillw.uisystem.UISystem
 import com.skillw.uisystem.api.UIApi.sendRes
+import com.skillw.uisystem.api.event.FinishLoading
 import com.skillw.uisystem.internal.manager.UIConfig
 import com.skillw.uisystem.internal.manager.UIConfig.debug
 import org.bukkit.entity.Player
@@ -25,9 +26,10 @@ object Listner {
         })
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    internal fun qwq(event: PlayerResourcePackEvent){
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    internal fun qwq(event: com.daxton.unrealcore.resource.event.PlayerResourcePackEvent){
         UISystem.rdataManager.setPlayer(event.player,event.resourceStatus)
+        if (event.resourceStatus == ResourceStatus.Finish_Load_Resource_Pack) FinishLoading(event.player).call()
         debug{
             println("加载材质包事件${event.player},状态${event.resourceStatus}")
             println(UISystem.rdataManager.toString())

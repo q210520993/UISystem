@@ -1,7 +1,9 @@
 package com.skillw.uisystem.internal.manager
 
+import com.daxton.unrealcore.application.UnrealCoreAPI
 import com.skillw.pouvoir.Pouvoir
 import com.skillw.pouvoir.api.manager.ConfigManager
+import com.skillw.pouvoir.internal.core.script.javascript.JSGlobal
 import com.skillw.pouvoir.util.static
 import com.skillw.uisystem.UISystem
 import org.spigotmc.AsyncCatcher
@@ -17,9 +19,11 @@ object UIConfig : ConfigManager(UISystem) {
         createIfNotExists("scripts", "example.js")
         Pouvoir.scriptEngineManager.globalVariables.let {
             it["UISystem"] = UISystem::class.java.static()
+            it["UnrealCoreAPI"] = UnrealCoreAPI::class.java
         }
     }
 
+    private val scripts = File(getDataFolder(), "scripts")
     override fun onEnable() {
         onReload()
     }
@@ -27,7 +31,6 @@ object UIConfig : ConfigManager(UISystem) {
         Pouvoir.scriptManager.addScriptDir(scripts)
     }
 
-    private val scripts = File(getDataFolder(), "scripts")
 
     var isDebug = false
 
@@ -40,6 +43,8 @@ object UIConfig : ConfigManager(UISystem) {
         get() = this["config"].getBoolean("resources.enable")
     val resourcesPassword: String?
         get() = this["config"].getString("resources.password")
+    val disableHud: List<String>
+        get() = this["config"].getStringList("disableHud")
 
     @JvmStatic
     fun debug(debug: () -> Unit) {
