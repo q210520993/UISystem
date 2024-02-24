@@ -7,6 +7,7 @@ import com.skillw.uisystem.api.event.GuiRegisterEvent
 import com.skillw.uisystem.api.gui.Gui
 import com.skillw.uisystem.api.manager.GuiManager
 import org.bukkit.entity.Player
+import taboolib.common.platform.function.warning
 
 object GuiManagerImpl: GuiManager() {
     override val key: String = "GuiManager"
@@ -15,6 +16,10 @@ object GuiManagerImpl: GuiManager() {
 
     override fun OpenGui(player: Player, key: String) {
         this[key]?.let { UnrealCoreAPI.openGUI(player, it) } ?: return
+    }
+
+    override fun close(player: Player) {
+        UnrealCoreAPI.closeGUI(player)
     }
 
     override fun onReload() {

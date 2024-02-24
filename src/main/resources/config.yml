@@ -7,8 +7,13 @@ resources:
   #材质包密码
   password: "123456"
 
+#主动显示的js
+Hud:
+  - "TEST"
+
+
 disableHud:
-  - Health
+#  - Health
 #    Crosshair,
 #    Armor,
 #    Health,
@@ -21,3 +26,4 @@ disableHud:
 #    PlayerTab,
 #    VehicleHealth,
 #    JumpMeter;
+

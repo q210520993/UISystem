@@ -2,21 +2,19 @@ package com.skillw.uisystem.internal.feather.resource
 
 import com.daxton.unrealcore.communication.event.PlayerConnectionSuccessfulEvent
 import com.daxton.unrealcore.resource.been.ResourceStatus
-import com.daxton.unrealcore.resource.event.PlayerResourcePackEvent
 import com.skillw.uisystem.UISystem
 import com.skillw.uisystem.api.UIApi.sendRes
 import com.skillw.uisystem.api.event.FinishLoading
 import com.skillw.uisystem.internal.manager.UIConfig
 import com.skillw.uisystem.internal.manager.UIConfig.debug
 import org.bukkit.entity.Player
-import org.checkerframework.checker.guieffect.qual.UI
 import taboolib.common.platform.event.EventPriority
 import taboolib.common.platform.event.SubscribeEvent
 
-object Listner {
+object Listener {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    internal fun ee(event: PlayerConnectionSuccessfulEvent){
+    internal fun playerConnectionSuccessfulEvent(event: PlayerConnectionSuccessfulEvent){
         if (UIConfig.resourcesEnable){
             event.player.sendRes()
         }
@@ -27,7 +25,7 @@ object Listner {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
-    internal fun qwq(event: com.daxton.unrealcore.resource.event.PlayerResourcePackEvent){
+    internal fun playerResourcePackEvent(event: com.daxton.unrealcore.resource.event.PlayerResourcePackEvent){
         UISystem.rdataManager.setPlayer(event.player,event.resourceStatus)
         if (event.resourceStatus == ResourceStatus.Finish_Load_Resource_Pack) FinishLoading(event.player).call()
         debug{
@@ -37,7 +35,7 @@ object Listner {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    internal fun awa(event: org.bukkit.event.player.PlayerQuitEvent) {
+    internal fun playerQuitEvent(event: org.bukkit.event.player.PlayerQuitEvent) {
         UISystem.rdataManager.removePlayer(event.player)
         debug{
             println("退出${event.player}")
@@ -45,27 +43,27 @@ object Listner {
     }
 
     @SubscribeEvent
-    internal fun pwp(event: org.bukkit.event.player.PlayerKickEvent){
+    internal fun playerKickEvent(event: org.bukkit.event.player.PlayerKickEvent){
         UISystem.rdataManager.removePlayer(event.player)
     }
 
     @SubscribeEvent
-    internal fun xcx(event: org.bukkit.event.player.PlayerMoveEvent){
+    internal fun playerMoveEvent(event: org.bukkit.event.player.PlayerMoveEvent){
         if (UISystem.rdataManager[event.player.uniqueId] == ResourceStatus.Start_Load_Resource_Pack) event.isCancelled = true
     }
 
     @SubscribeEvent
-    internal fun pvp(event: org.bukkit.event.player.PlayerInteractEvent){
+    internal fun playerInteractEvent(event: org.bukkit.event.player.PlayerInteractEvent){
         if (UISystem.rdataManager[event.player.uniqueId] == ResourceStatus.Start_Load_Resource_Pack) event.isCancelled = true
     }
 
     @SubscribeEvent
-    internal fun rpg(event: org.bukkit.event.player.PlayerInteractEntityEvent){
+    internal fun playerInteractEntityEvent(event: org.bukkit.event.player.PlayerInteractEntityEvent){
         if (UISystem.rdataManager[event.player.uniqueId] == ResourceStatus.Start_Load_Resource_Pack) event.isCancelled = true
     }
 
     @SubscribeEvent
-    internal fun xxx(event: org.bukkit.event.entity.EntityDamageEvent) {
+    internal fun entityDamageEvent(event: org.bukkit.event.entity.EntityDamageEvent) {
         if (event.entity is Player){
             if(UISystem.rdataManager[event.entity.uniqueId] == ResourceStatus.Start_Load_Resource_Pack) event.isCancelled = true
         }

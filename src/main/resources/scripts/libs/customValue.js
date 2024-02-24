@@ -1,3 +1,7 @@
+const _APIcustomValueJs_ = {
+    map: find("java.util.Map"),
+    api: find("com.daxton.unrealcore.application.UnrealCoreAPI")
+}
 const transitionFunctions = (player) => {
     const api = find("com.daxton.unrealcore.application.UnrealCoreAPI").inst(player).getPlaceholderHelper();
     return {
@@ -16,10 +20,10 @@ const transitionFunctions = (player) => {
     }
 }
 const customValueFunctions = (player) => {
-    const api = find("com.daxton.unrealcore.application.UnrealCoreAPI").inst(player).getPlaceholderHelper();
+    const api = _APIcustomValueJs_.api.inst(player).getPlaceholderHelper();
     return {
         setValue: (key,value) => {
-            if (value instanceof find("java.util.HashMap")) {
+            if (value instanceof _APIcustomValueJs_.map) {
                 api.customValueMultiSet(player,value)
             } else {
                 api.customValueSet(player,key,value)

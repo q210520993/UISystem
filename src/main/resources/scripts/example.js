@@ -1,50 +1,57 @@
 //@GuiCreate()
+load("plugins/UISystem/scripts/libs/Modules.js");
+load("plugins/UISystem/scripts/libs/customValue.js");
 key = "example"
-load("plugins/UISystem/libs/customEvent.js")
-load("plugins/UISystem/libs/Modules.js")
 const map = new java.util.HashMap()
-const button1 = (()=>{
-    const button = new ModulesAPI.Button()
-    button.moduleID = "button"
-    button.x = -3
-    button.y = 3
-    button.image = "gui/icon/x.png"
-    button.color = "#FFFFFF"
-    button.hoverColor = "#1e90ff"
-    button.clickColor = button.hoverColor
-    button.transparent = 255
-    button.width = 6
-    button.height = 6
-    button.textColor = "#00CACA"
-    button.textSize = 1
-    return button
-})()
+const MouseActionType = find("com.daxton.unrealcore.common.type.MouseActionType")
+const MouseButtonType = find("com.daxton.unrealcore.common.type.MouseButtonType")
 function setting(guidata) {
-    const data = guidata.getMainGuiData()
-    data.setModuleID("example")
-    data.setY("0")
-    data.setX("0")
-    data.setPosition("5")
-    data.setImage("gui/background/background_2.png")
-    data.setHeight("250")
-    data.setMask("true")
-    data.setColor = "ffffff"
-    data.transparent = "255"
-    data.addModule("button", button1)
-    data.setWidth(250)
+    //快速注册主要数据                                   界面数据       主要数据的ID，通常和界面数据一样
+    const mainGuiData = Functions.MainGuiData.instance(guidata,"example",()=>{
+        this.y = 0
+        this.x = 0
+        this.position = 5
+        this.image = "gui/background/background_2.png"
+        this.height = 250
+        this.width = 250
+        this.mask = true
+        this.setColor = "ffffff"
+        this.transparent = "255"
+    })
+    //快速注册按钮图标                              主要数据         moduleID(在这个主要数据里无法重复)
+    const test = Functions.ButtonModule.instance(mainGuiData,"button1",()=>{
+        this.x = -3
+        this.y = 3
+        this.image = "gui/icon/x.png"
+        this.color = "#FFFFFF"
+        this.hoverImage = "gui/icon/x.png"
+        this.hoverColor = "#1e90ff"
+        this.clickColor = "#1e90ff"
+        this.position = 3
+        this.font = "0"
+        this.transparent = 255
+        this.width = 6
+        this.height = 6
+        this.textColor = "#00CACA"
+        this.textSize = 1
+        this.use = true
+    })
+    //快速注册按钮触发器
+    Functions.ButtonModule.createBlock(guidata,test,map,(data,buttonModule,button,action) =>{
+        //BLOCK
+        if(button === MouseButtonType.Left && action === MouseActionType.Off) {
+        }
+    })
     return data
 }
+function buttonClick(data,buttonModule,button,action) {
+    //快速注册一个按钮处理器
+    Functions.ButtonModule.buttonHandler(map,data,buttonModule,button,action)
+}
 function opening(data) {
-    customEvent("InvOpening").call()
+    customEvent("Opening").call()
 }
 function close(data) {
-}
-map.put("button", (data) =>{
-    const a = data.player
-    a.sendMessage("hello,Button")
-})
-function buttonClick(data,buttonModule,button,action) {
-    map.get(buttonModule.moduleID)(data)
 }
 function checkClick(data,checkModule,button,action) {
 }

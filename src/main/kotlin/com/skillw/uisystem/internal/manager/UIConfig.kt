@@ -16,7 +16,7 @@ object UIConfig : ConfigManager(UISystem) {
 
     override fun onLoad() {
         AsyncCatcher.enabled = false
-        createIfNotExists("scripts", "example.js")
+        createIfNotExists("scripts", "example.js","libs/customEvent.js","libs/customValue","libs/Modules","libs/sendPack.js")
         Pouvoir.scriptEngineManager.globalVariables.let {
             it["UISystem"] = UISystem::class.java.static()
             it["UnrealCoreAPI"] = UnrealCoreAPI::class.java
@@ -45,6 +45,10 @@ object UIConfig : ConfigManager(UISystem) {
         get() = this["config"].getString("resources.password")
     val disableHud: List<String>
         get() = this["config"].getStringList("disableHud")
+
+    val AutoEnableHUD: List<String>
+        get() = this["config"].getStringList("Hud")
+
 
     @JvmStatic
     fun debug(debug: () -> Unit) {

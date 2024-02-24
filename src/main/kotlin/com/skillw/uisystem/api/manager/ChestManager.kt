@@ -5,10 +5,8 @@ import com.skillw.pouvoir.api.plugin.map.KeyMap
 import com.skillw.uisystem.api.gui.Gui
 import org.bukkit.entity.Player
 
-abstract class GuiManager: KeyMap<String, Gui>(), Manager{
-    abstract fun OpenGui(player: Player, key: String)
+abstract class ChestManager: KeyMap<String,Gui>(), Manager {
+    abstract fun setPlayer(player: Player, key: String)
 
-    abstract fun close(player: Player)
-
-
+    abstract fun removePlayer(player: Player, key: String)
 }

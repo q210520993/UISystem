@@ -8,7 +8,7 @@ import org.checkerframework.checker.guieffect.qual.UI
 
 object RdataManagerImpl: RdataManager() {
     override val key: String = "RdataManager"
-    override val priority = 2
+    override val priority = 4
     override val subPouvoir = UISystem
 
     override fun setPlayer(player: Player,boolean: ResourceStatus) {
@@ -26,7 +26,5 @@ object RdataManagerImpl: RdataManager() {
     override fun PlayerIsFinish(player: Player): Boolean {
         return UISystem.rdataManager[player.uniqueId] == ResourceStatus.Finish_Load_Resource_Pack
     }
-
-
 
 }
