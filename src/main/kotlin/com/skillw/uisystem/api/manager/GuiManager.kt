@@ -10,5 +10,4 @@ abstract class GuiManager: KeyMap<String, Gui>(), Manager{
 
     abstract fun close(player: Player)
 
-
 }

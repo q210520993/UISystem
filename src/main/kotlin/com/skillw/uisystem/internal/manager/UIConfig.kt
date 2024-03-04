@@ -3,7 +3,9 @@ package com.skillw.uisystem.internal.manager
 import com.daxton.unrealcore.application.UnrealCoreAPI
 import com.skillw.pouvoir.Pouvoir
 import com.skillw.pouvoir.api.manager.ConfigManager
+import com.skillw.pouvoir.api.plugin.SubPouvoir
 import com.skillw.pouvoir.internal.core.script.javascript.JSGlobal
+import com.skillw.pouvoir.util.safe
 import com.skillw.pouvoir.util.static
 import com.skillw.uisystem.UISystem
 import org.spigotmc.AsyncCatcher
@@ -16,21 +18,29 @@ object UIConfig : ConfigManager(UISystem) {
 
     override fun onLoad() {
         AsyncCatcher.enabled = false
-        createIfNotExists("scripts", "example.js","libs/customEvent.js","libs/customValue","libs/Modules","libs/sendPack.js")
+        createIfNotExists("scripts", "example.js",
+            "libs/customEvent.js",
+            "libs/customValue.js",
+            "libs/sendPack.js",
+            "libs/core/tools/require.js",
+            "libs/core/tools/AddModule.js",
+            "libs/core/Modules/Modules.js"
+        )
         Pouvoir.scriptEngineManager.globalVariables.let {
             it["UISystem"] = UISystem::class.java.static()
             it["UnrealCoreAPI"] = UnrealCoreAPI::class.java
         }
     }
 
+
     private val scripts = File(getDataFolder(), "scripts")
     override fun onEnable() {
+        JSGlobal.addToGlobal(File(getDataFolder(), "scripts/libs/core"))
         onReload()
     }
     override fun subReload() {
         Pouvoir.scriptManager.addScriptDir(scripts)
     }
-
 
     var isDebug = false
 
