@@ -4,9 +4,11 @@ import com.daxton.unrealcore.application.UnrealCoreAPI
 import com.skillw.pouvoir.Pouvoir
 import com.skillw.pouvoir.api.manager.ConfigManager
 import com.skillw.pouvoir.api.plugin.SubPouvoir
+import com.skillw.pouvoir.api.plugin.map.DataMap
 import com.skillw.pouvoir.internal.core.script.javascript.JSGlobal
 import com.skillw.pouvoir.util.safe
 import com.skillw.pouvoir.util.static
+import com.skillw.pouvoir.util.toMap
 import com.skillw.uisystem.UISystem
 import org.spigotmc.AsyncCatcher
 import taboolib.common.platform.function.getDataFolder
@@ -42,10 +44,14 @@ object UIConfig : ConfigManager(UISystem) {
         Pouvoir.scriptManager.addScriptDir(scripts)
     }
 
+    val databaseConfig: DataMap
+        get() = DataMap().also { it.putAll(this["config"].getConfigurationSection("database")!!.toMap()) }
+
+
     var isDebug = false
 
     val debug: Boolean
-        get() = this["config"].getBoolean("options.debug") || isDebug
+        get() = this["config"].getBoolean("debug") || isDebug
 
     val resources: String?
         get() = this["config"].getString("resources.name")

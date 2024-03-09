@@ -29,7 +29,7 @@ internal object GuiAnnotation: ScriptAnnotation("GuiCreate",fileAnnotation = tru
             override val chest: Boolean = chest
 
             init {
-                this.mainGUIData = Pouvoir.scriptManager.invoke<MainGUIData>(script, "setting", parameters = arrayOf(this))
+                Pouvoir.scriptManager.invoke<MainGUIData>(script, "setting", parameters = arrayOf(this))
                 this.mainGUIData.moduleID = key
             }
             override fun opening() {

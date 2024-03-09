@@ -1,5 +1,19 @@
 debug: false
 
+database:
+  type: sqlite
+  # sqlite的path
+  path: plugins/UISystem/database.db
+  enable: false
+  host: localhost
+  port: 3306
+  user: root
+  password: root
+  database: root
+  table: my_database
+  #每10分钟同步一次 （tick）
+  user-container-sync-time: 12000
+
 resources:
   enable: true
   #加载的材质包名称，不需要带zip
@@ -8,9 +22,7 @@ resources:
   password: "123456"
 
 #主动显示的js
-Hud:
-  - "TEST"
-
+Hud: []
 
 disableHud:
 #  - Health

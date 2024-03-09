@@ -7,7 +7,7 @@ import com.skillw.uisystem.UISystem
 import org.bukkit.entity.Player
 import java.util.UUID
 
-abstract class RdataManager: Manager, BaseMap<UUID, ResourceStatus>() {
+abstract class ResourceStateManager: Manager, BaseMap<UUID, ResourceStatus>() {
 
     abstract fun setPlayer(player: Player,boolean: ResourceStatus)
 
@@ -20,15 +20,15 @@ abstract class RdataManager: Manager, BaseMap<UUID, ResourceStatus>() {
     companion object {
 
         fun Player.addPlayer(r: ResourceStatus){
-            UISystem.rdataManager.setPlayer(this,r)
+            UISystem.resourceStateManager.setPlayer(this,r)
         }
 
         fun Player.removePlayer(){
-            UISystem.rdataManager.removePlayer(this)
+            UISystem.resourceStateManager.removePlayer(this)
         }
 
         fun Player.hasPlayer(){
-            UISystem.rdataManager.hasPlayer(this)
+            UISystem.resourceStateManager.hasPlayer(this)
         }
 
     }

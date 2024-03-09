@@ -26,17 +26,17 @@ object Listener {
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     internal fun playerResourcePackEvent(event: com.daxton.unrealcore.resource.event.PlayerResourcePackEvent){
-        UISystem.rdataManager.setPlayer(event.player,event.resourceStatus)
+        UISystem.resourceStateManager.setPlayer(event.player,event.resourceStatus)
         if (event.resourceStatus == ResourceStatus.Finish_Load_Resource_Pack) FinishLoading(event.player).call()
         debug{
             println("加载材质包事件${event.player},状态${event.resourceStatus}")
-            println(UISystem.rdataManager.toString())
+            println(UISystem.resourceStateManager.toString())
         }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     internal fun playerQuitEvent(event: org.bukkit.event.player.PlayerQuitEvent) {
-        UISystem.rdataManager.removePlayer(event.player)
+        UISystem.resourceStateManager.removePlayer(event.player)
         debug{
             println("退出${event.player}")
         }
@@ -44,28 +44,28 @@ object Listener {
 
     @SubscribeEvent
     internal fun playerKickEvent(event: org.bukkit.event.player.PlayerKickEvent){
-        UISystem.rdataManager.removePlayer(event.player)
+        UISystem.resourceStateManager.removePlayer(event.player)
     }
 
     @SubscribeEvent
     internal fun playerMoveEvent(event: org.bukkit.event.player.PlayerMoveEvent){
-        if (UISystem.rdataManager[event.player.uniqueId] == ResourceStatus.Start_Load_Resource_Pack) event.isCancelled = true
+        if (UISystem.resourceStateManager[event.player.uniqueId] == ResourceStatus.Start_Load_Resource_Pack) event.isCancelled = true
     }
 
     @SubscribeEvent
     internal fun playerInteractEvent(event: org.bukkit.event.player.PlayerInteractEvent){
-        if (UISystem.rdataManager[event.player.uniqueId] == ResourceStatus.Start_Load_Resource_Pack) event.isCancelled = true
+        if (UISystem.resourceStateManager[event.player.uniqueId] == ResourceStatus.Start_Load_Resource_Pack) event.isCancelled = true
     }
 
     @SubscribeEvent
     internal fun playerInteractEntityEvent(event: org.bukkit.event.player.PlayerInteractEntityEvent){
-        if (UISystem.rdataManager[event.player.uniqueId] == ResourceStatus.Start_Load_Resource_Pack) event.isCancelled = true
+        if (UISystem.resourceStateManager[event.player.uniqueId] == ResourceStatus.Start_Load_Resource_Pack) event.isCancelled = true
     }
 
     @SubscribeEvent
     internal fun entityDamageEvent(event: org.bukkit.event.entity.EntityDamageEvent) {
         if (event.entity is Player){
-            if(UISystem.rdataManager[event.entity.uniqueId] == ResourceStatus.Start_Load_Resource_Pack) event.isCancelled = true
+            if(UISystem.resourceStateManager[event.entity.uniqueId] == ResourceStatus.Start_Load_Resource_Pack) event.isCancelled = true
         }
     }
 

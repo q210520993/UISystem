@@ -11,15 +11,9 @@ abstract class Gui() : Registrable<String>, UnrealCoreGUI() {
 
     abstract override val key: String
 
-    abstract override fun opening()
-
-    abstract override fun close()
-
     var release: Boolean = false
 
     abstract val chest: Boolean
-
-    abstract override fun buttonClick(buttonModule: ButtonModule?, button: MouseButtonType?, action: MouseActionType?)
 
     override fun register() {
         UISystem.guiManager.register(this)

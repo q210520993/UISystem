@@ -1,11 +1,13 @@
 package com.skillw.uisystem.util
 
+import com.daxton.unrealcore.been.common.type.KeyboardKeyType
 import com.daxton.unrealcore.display.type.HUDType
 
-fun findHUDType(input: String): HUDType? {
+inline fun <reified T: Enum<T>> findEnumValue(input: String): T? {
     val formattedInput = input.uppercase()
-    return HUDType.values().find { it.name.uppercase() == formattedInput }
+    return enumValues<T>().find { it.name.uppercase() == formattedInput }
 }
+
 fun anyToBoolean(value: Any): Boolean {
     return when (value) {
         is Boolean -> value

@@ -5,6 +5,8 @@ import com.skillw.pouvoir.util.soundFail
 import com.skillw.pouvoir.util.soundSuccess
 import com.skillw.uisystem.UISystem
 import com.skillw.uisystem.api.UIApi.openGui
+import com.skillw.uisystem.api.UIApi.removeHud
+import com.skillw.uisystem.api.UIApi.sendHud
 import com.skillw.uisystem.internal.manager.UIConfig.isDebug
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -73,6 +75,32 @@ object UICommand {
             }
             execute<ProxyCommandSender> {zxy,context,_->
                 (zxy.origin as Player).openGui(context["guiID"])
+            }
+        }
+    }
+
+    @CommandBody(permission = "ui.command.sendHUD")
+    val sendHUD = subCommand {
+        dynamic("hudID"){
+            suggestion<ProxyCommandSender> {zxy, _->
+                zxy.soundSuccess()
+                UISystem.hudManager.keys.toList()
+            }
+            execute<ProxyCommandSender> {zxy,context,_->
+                (zxy.origin as Player).sendHud(context["hudID"])
+            }
+        }
+    }
+
+    @CommandBody(permission = "ui.command.removeHUD")
+    val removeHUD = subCommand {
+        dynamic("hudID"){
+            suggestion<ProxyCommandSender> {zxy, _->
+                zxy.soundSuccess()
+                UISystem.hudManager.keys.toList()
+            }
+            execute<ProxyCommandSender> {zxy,context,_->
+                (zxy.origin as Player).removeHud(context["hudID"])
             }
         }
     }
