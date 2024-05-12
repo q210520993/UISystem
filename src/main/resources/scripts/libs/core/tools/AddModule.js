@@ -1,6 +1,3 @@
-function add(data, ID) {
-    data.addModule(this, ID)
-}
 const ModulesAPI = {
     Button: find("com.daxton.unrealcore.display.been.module.control.ButtonModuleData"),
     ChatDisplay: find("com.daxton.unrealcore.display.been.module.control.ChatDisplayModuleData"),

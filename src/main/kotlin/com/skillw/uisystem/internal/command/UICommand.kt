@@ -6,6 +6,7 @@ import com.skillw.pouvoir.util.soundSuccess
 import com.skillw.uisystem.UISystem
 import com.skillw.uisystem.api.UIApi.openGui
 import com.skillw.uisystem.api.UIApi.removeHud
+import com.skillw.uisystem.api.UIApi.sendCamera
 import com.skillw.uisystem.api.UIApi.sendHud
 import com.skillw.uisystem.internal.manager.UIConfig.isDebug
 import org.bukkit.command.CommandSender
@@ -104,6 +105,19 @@ object UICommand {
             }
         }
     }
+    @CommandBody(permission = "ui.command.setCamera")
+    val setCamera = subCommand {
+        dynamic("cameraID"){
+            suggestion<ProxyCommandSender> {zxy, _->
+                zxy.soundSuccess()
+                UISystem.cameraManager.keys.toList()
+            }
+            execute<ProxyCommandSender> {zxy,context,_->
+                (zxy.origin as Player).sendCamera(context["cameraID"])
+            }
+        }
+    }
+
 
     @CommandBody(permission = "ui.command.reload")
     val reload = subCommand {

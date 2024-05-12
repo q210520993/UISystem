@@ -14,11 +14,12 @@ internal object Hud: ScriptAnnotation("HudCreate"){
         val script = data.script
         val args = data.args.toArgs()
         val key = if (args.isEmpty() || args[0] == "") data.function else args[0]
+        println(key)
         object : Hud() {
 
             override val key: String = key
 
-            override val data = Pouvoir.scriptManager.invoke<List<ModuleData>?>(script, "setting")
+            override val data = Pouvoir.scriptManager.invoke<List<ModuleData>?>(script, data.function)
 
         }.register()
     }

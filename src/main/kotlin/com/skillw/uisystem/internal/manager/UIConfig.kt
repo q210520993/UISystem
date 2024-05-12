@@ -26,8 +26,12 @@ object UIConfig : ConfigManager(UISystem) {
             "libs/sendPack.js",
             "libs/core/tools/require.js",
             "libs/core/tools/AddModule.js",
-            "libs/core/Modules/Modules.js"
+            "libs/core/Modules/Modules.js",
+            "libs/TextModule.js",
+            "libs/ButtonModule.js",
+            "libs/button/AbstractButton.js"
         )
+        createIfNotExists("camera", "A.yml")
         Pouvoir.scriptEngineManager.globalVariables.let {
             it["UISystem"] = UISystem::class.java.static()
             it["UnrealCoreAPI"] = UnrealCoreAPI::class.java
@@ -37,7 +41,6 @@ object UIConfig : ConfigManager(UISystem) {
 
     private val scripts = File(getDataFolder(), "scripts")
     override fun onEnable() {
-        JSGlobal.addToGlobal(File(getDataFolder(), "scripts/libs/core"))
         onReload()
     }
     override fun subReload() {

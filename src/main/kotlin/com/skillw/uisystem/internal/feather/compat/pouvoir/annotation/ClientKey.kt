@@ -31,11 +31,12 @@ internal object ClientKey: ScriptAnnotation("ClientKeyRegister") {
 
             override val category: String = category
 
+
             override val name: String = name
 
             override val isAutoSendToPlayer: Boolean = isAuto
 
-            override val keyboardKeyType: KeyboardKeyType = findEnumValue<KeyboardKeyType>(keyboardKeyType) ?: KeyboardKeyType.None
+            override val keyboardKeyType: KeyboardKeyType = findEnumValue<KeyboardKeyType>(keyboardKeyType) ?: KeyboardKeyType.NONE
 
             override fun exec(player: Player) {
                 return Pouvoir.scriptManager.invoke(

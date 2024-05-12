@@ -1,59 +1,73 @@
-function TextButton(name) {
+const __TextModuleFind__ = {
+    module: find("com.daxton.unrealcore.display.type.ModuleType"),
+    text: find("com.daxton.unrealcore.display.been.module.display.TextModuleData")
+}
+load("plugins/UISystem/scripts/libs/core/Modules/Modules.js")
+function TextModule(name) {
     //继承
     ModuleData.call(this,name)
+    this.ModuleName = name
     this.texts = []
-    this.font = ""
-    this.space = ""
-    this.textSize = ""
-    this.textColor = ""
-    this.moduleType = ModulesAPI.ModuleType.Text
+    this.font = "0"
+    this.space = "10"
+    this.textSize = "1"
+    this.textColor = "6821a9"
+    this.moduleType = __TextModuleFind__.module.Text
 }
-
-//继承ModuleData得到ModuleData的方法和属性
-
-TextButton.prototype.constructor = TextButton
+TextModule.prototype = Object.create(ModuleData.prototype);
+TextModule.prototype.constructor = TextModule
 
 //你必须重写它，因为这是一个抽象方法，直接使用会报错
 
-TextButton.prototype.toJavaModule = () => {
-    const text = find("com.daxton.unrealcore.display.been.module.display.TextModuleData")
-    const text1 = new text()
-    this.QST(text1)
-    text1.font = this.font
+TextModule.prototype.toJavaModule = () => {
+    const text1 = new __TextModuleFind__.text()
+    this.toUnrealCore(text1)
+    text1.text = listOf(this.texts)
     text1.space = this.space
-    text1.textSize = this.textSize
     text1.textColor = this.textColor
-    text1.text = arrayOf(this.texts)
+    text1.font = 0
+    text1.position = 1
     return text1
 }
 
-TextButton.prototype.builder = (data) => {
+TextModule.prototype.builder = (data) => {
     const text = this.toJavaModule()
-    add(data, text)
+    data.getMainGUIData().addModule(this.ModuleName,text)
 }
 
-TextButton.prototype.setFont = (str) => {
+TextModule.prototype.setSpace = (str) => {
+    this.space = str
+    return this
+}
+
+
+TextModule.prototype.setModuleID = (str) => {
+    this.moduleID = str
+    return this
+}
+
+TextModule.prototype.setFont = (str) => {
     this.font = str
     return this
 }
 
-TextButton.prototype.setFontColor = (str) => {
+TextModule.prototype.setFontColor = (str) => {
     this.fontColor = str
     return this
 }
 
 //设置文本 必须为js 数组
-TextButton.prototype.setTexts = (args) => {
+TextModule.prototype.setTexts = (args) => {
     this.texts = args
     return this
 }
 //新增文本
-TextButton.prototype.addText = (str) => {
+TextModule.prototype.addText = (str) => {
     this.texts.push(str)
     return this
 }
 //过滤文本，为true则是剩下的
-TextButton.prototype.filter = (condition) => {
+TextModule.prototype.filter = (condition) => {
     this.texts.filter((value) => {
         condition(value)
     })

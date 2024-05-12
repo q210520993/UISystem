@@ -1,35 +1,47 @@
 //@GuiCreate()
 key = "example"
-//快速导入所需模块
-require([
-    "TextModule.js"
-])
+
+load("plugins/UISystem/scripts/libs/TextModule.js")
+load("plugins/UISystem/scripts/libs/ButtonModule.js")
+load("plugins/UISystem/scripts/libs/Gui/Setting.js")
+
 
 function setting(Data) {
-    new TextButton("test")
-        .setX(10)
-        .setY(10)
-        .setTexts([
-            "text",
-            "what can i see",
-            "小南娘大鸡鸡"
-        ])
-        .setWidth(10)
-        .setHeight(10)
-        .filter((value) =>{
-            //如果是小南娘大鸡鸡就自动过滤
-            value !== "小南娘大鸡鸡"
+    print(Data.player)
+    const player = Data.player
+    new MainGuiData(key)
+        .setX()
+        .setY()
+        .setImage()
+        .setHeight()
+        .setWidth()
+        .setPosition()
+        .setTransparent()
+        .addModuleData(()=>{
+            return new TextModule("test")
+                .setX(5)
+                .setY(40)
+                .setWidth(10)
+                .setHeight(10)
+                .setSpace(18)
+                .addText(player.name)
         })
-        .builder(Data)
-    return data
+        .toUnrealCore()
 }
 function buttonClick(data,buttonModule,button,action) {
-    //快速注册一个按钮处理器
-    Functions.ButtonModule.buttonHandler(map,data,buttonModule,button,action)
+    Button.CreateHandler(data,buttonModule,button,action)
 }
 function opening(data) {
-    customEvent("Opening").call()
+    if(data.player.name === "MinecraftMryely") {
+        setDataValue(data)
+    }
+
 }
+
+function setDataValue(data, key, value) {
+    data.customData.put(key,value)
+}
+
 function close(data) {
 }
 function checkClick(data,checkModule,button,action) {

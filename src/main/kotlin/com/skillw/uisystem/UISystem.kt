@@ -61,6 +61,10 @@ object UISystem : Plugin(), SubPouvoir {
     @PouManager
     lateinit var serverKeyManager: ServerKeyManager
 
+    @JvmStatic
+    @PouManager
+    lateinit var cameraManager: CameraManager
+
     override fun onLoad() {
         load()
     }

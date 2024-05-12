@@ -1,9 +1,12 @@
+import io.izzel.taboolib.gradle.*
+
 plugins {
     `java-library`
     `maven-publish`
     signing
-    id("io.izzel.taboolib") version "1.56"
-    id("org.jetbrains.kotlin.jvm") version "1.5.31"
+    id("io.izzel.taboolib") version "2.0.11"
+    id("org.jetbrains.kotlin.jvm") version "1.9.22"
+    id("org.jetbrains.dokka") version "1.9.20"
     id("io.codearte.nexus-staging") version "0.30.0"
 }
 
@@ -21,11 +24,6 @@ task("info") {
     println(project.version.toString())
 }
 taboolib {
-    if (api != null) {
-        println("api!")
-        taboolib.options("skip-kotlin-relocate", "keep-kotlin-module")
-    }
-
     description {
         contributors {
             name("Clok")
@@ -35,16 +33,18 @@ taboolib {
             name("UnrealCore")
         }
     }
-    install("module-configuration")
-    install("module-lang")
-    install("platform-bukkit")
-    install("common")
-    install("module-metrics")
-    install("module-chat")
-    install("common-5")
-
+    env{
+        install(CONFIGURATION, LANG, BUKKIT, METRICS, CHAT, BUKKIT_ALL)
+    }
     classifier = null
-    version = "6.0.12-69"
+    version {
+        if(project.gradle.startParameter.taskNames.getOrNull(0) == "taboolibBuildApi" || api != null){
+            println("api!")
+            isSkipKotlinRelocate =true
+            isSkipKotlin = true
+        }
+        taboolib = "6.1.1-beta17"
+    }
 }
 repositories {
     mavenCentral()

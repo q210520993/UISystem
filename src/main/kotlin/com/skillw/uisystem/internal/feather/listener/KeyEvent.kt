@@ -19,7 +19,7 @@ object KeyEvent {
             println("KeyAction: ${event.keyAction}")
         }
         if (!event.isInputNow && event.keyAction == 1) {
-            UISystem.serverKeyManager[event.keyName]?.exec(event.player) ?: return println("NoneServerKey")
+            UISystem.serverKeyManager[event.keyName]?.exec(event.player) ?: return
         }
     }
 
@@ -28,7 +28,7 @@ object KeyEvent {
         UISystem.clientKeyManager[event.keyMapKey]?.let {
             it.exec(player = event.player)
             SCKeyEvent.ClientKeyOn(event.keyMapKey, it, event).call()
-        } ?: return println("NoneClientKey")
+        } ?: return
     }
 
     @SubscribeEvent

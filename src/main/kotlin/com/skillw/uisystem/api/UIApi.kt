@@ -67,4 +67,9 @@ object UIApi {
         UISystem.clientKeyManager.keyMappingClear(this)
     }
 
+    @JvmStatic
+    internal fun Player.sendCamera(key: String){
+        UISystem.cameraManager.sendCamera(key, this)
+    }
+
 }

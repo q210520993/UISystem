@@ -1,0 +1,8 @@
+Test:
+  cameraTargetType: "Self"
+  cameraCameraType: "THIRD_PERSON_BACK"
+  x: "{player_self_x}+sin(radians(({player_self_yaw}+180)*-1))*5"
+  y: "{player_self_y}+2"
+  z: "{player_self_z}+cos(radians(({player_self_yaw}+180)*-1))*5"
+  yaw: "{player_self_yaw}"
+  pitch: '{player_self_pitch}'

@@ -20,7 +20,6 @@ internal object ServerKey: ScriptAnnotation("ServerKeyRegister"){
         val function = data.function
         val key = if (args.isEmpty() || args[0] == "") function else args[0]
         val type = args[1]
-        println(args[1])
         object : ServerKey() {
             override val key: String = key
 

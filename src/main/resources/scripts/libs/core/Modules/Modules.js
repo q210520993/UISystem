@@ -4,30 +4,43 @@ function ModuleData(ModuleName) {
         throw new Error("这是一个抽象类，你无法直接使用！")
     }
 
-    this.ModuleName = null
+    this.ModuleName = "null"
     this.x = ""
     this.y = ""
     this.width = ""
     this.height = ""
-    this.color = ""
-    this.path = ""
-    this.position = ""
+    this.color = "0xffffff"
+    this.path = []
+    this.position = "1"
     this.filePath = ""
     this.moduleType = ""
-    this.transparent = ""
-    this.mask = ""
+    this.transparent = "255"
+    this.mask = "true"
 
 
 }
 
-ModuleData.prototype.QST = (UnrealModuleData) => {
-    UnrealModuleData.ModuleName = this.ModuleName
+ModuleData.prototype.setTransparent = () => this.transparent
+
+ModuleData.prototype.setTransparent = str => {
+    this.transparent = str
+    return this
+}
+
+ModuleData.prototype.setMask = str => {
+    this.mask = str
+    return this
+}
+ModuleData.prototype.getMask = str => this.mask
+
+ModuleData.prototype.toUnrealCore = (UnrealModuleData) => {
+    UnrealModuleData.setModuleID(this.ModuleName)
     UnrealModuleData.x = this.x;
     UnrealModuleData.y = this.y;
     UnrealModuleData.width = this.width;
     UnrealModuleData.height = this.height;
     UnrealModuleData.color = this.color;
-    UnrealModuleData.path = this.path;
+    UnrealModuleData.path = listOf(this.path);
     UnrealModuleData.position = this.position;
     UnrealModuleData.filePath = this.filePath;
     UnrealModuleData.moduleType = this.moduleType;
